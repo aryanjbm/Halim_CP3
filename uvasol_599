@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class Main
+class Main{
 	static int[] parent=new int[27];
 	static int[] rank=new int[27];
 	
