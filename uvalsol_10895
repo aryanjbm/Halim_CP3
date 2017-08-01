@@ -1,0 +1,59 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main{
+	
+	
+	
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		while(scanner.hasNext()){
+		int n=scanner.nextInt();
+		int m=scanner.nextInt();
+	
+		int[][] mat=new int[m][n];
+		
+		for(int i=0;i<n;i++){
+			Queue<Integer> tmp=new LinkedList<>();
+			int r=scanner.nextInt();
+			for(int j=0;j<r;j++){
+				tmp.add(scanner.nextInt()-1);
+			}
+			
+			
+			for(int j=0;j<r;j++){
+				mat[tmp.poll()][i]=scanner.nextInt();
+			}
+			
+			
+
+			
+			
+		}
+		
+		System.out.println(m+" "+n);
+		for(int i=0;i<m;i++){
+			String s="";
+			int r=0;
+			String s2="";
+			boolean flag=false;
+			for(int j=0;j<n;j++){
+				if(mat[i][j]!=0){
+					r+=1;
+					s+=(" "+(j+1));
+					if(flag)
+						s2+=" ";
+					s2+=mat[i][j];
+					flag=true;
+				}
+			}
+			System.out.println(r+s);
+			System.out.println(s2);
+		}
+		
+		
+	}
+	}
+
+}
