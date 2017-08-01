@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-//working on it
 
+//working on it
 public class WakingUpBrain {
 	
 	static Map<Character, Boolean> status;
@@ -46,7 +46,7 @@ public class WakingUpBrain {
 				}
 				
 				if(!graph.containsKey(y)){
-					graph.put(x,new ArrayList<>());
+					graph.put(y,new ArrayList<>());
 				}
 				graph.get(x).add(y);
 				graph.get(y).add(x);
@@ -56,10 +56,47 @@ public class WakingUpBrain {
 				
 			}
 			
-			int total;
+			int total=0;
+			boolean flag=true;
+			while(flag){
+				flag=false;
+				for(char key:graph.keySet()){
+					int count=0;
+					for(Character nbr:graph.get(key)){
+						if(status.containsKey(nbr)){
+							count+=1;
+						}
+						
+						if(count==3){
+							status.put(key,true);
+							flag=true;
+							break;
+						}
+					}
+				}
+				
+				
+				total+=1;
+				
+				
+				
+			}
 			
-	
+			flag=true;
+			for(Character ch:graph.keySet()){
+				if(!status.containsKey(ch)){
+					flag=false;
+					break;
+				}
+			}
 			
+			
+			if(flag){
+				System.out.println("WAKE UP IN, "+total+", YEARS");
+			}
+			else{
+				System.out.println("THIS BRAIN NEVER WAKES UP");
+			}
 			
 			
 			
