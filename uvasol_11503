@@ -1,0 +1,114 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
+
+class Pair{
+	String parent;
+	int size;
+	
+}
+
+class Main {
+	
+	static HashMap<String,Pair> map;
+	public static String findSet(String name){
+		if(!map.containsKey(name)){
+			return null;
+		}
+		if(map.get(name).parent==name){
+			return name;
+		}
+		else{
+			return findSet(map.get(name).parent);
+		}
+		
+	}
+	
+	
+	
+	
+	public static boolean isSameSet(String i,String j){
+		return findSet(i)==findSet(j);
+	}
+	
+	
+	
+	public static void union(String i,String j){
+		
+		if(!isSameSet(i, j)){
+			String x=findSet(i);
+			String y=findSet(j);
+			
+			if(map.get(x).size<map.get(y).size){
+				map.get(x).parent=y;
+				map.get(y).size+=map.get(x).size;
+			}
+			else{
+				map.get(y).parent=x;
+				map.get(x).size+=map.get(y).size;
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		String line;
+		StringTokenizer st;
+		line=reader.readLine();
+		st=new StringTokenizer(line);
+		int n=Integer.parseInt(st.nextToken());
+		
+		for(int i=0;i<n;i++){
+			line=reader.readLine();
+			st=new StringTokenizer(line);
+			int m=Integer.parseInt(st.nextToken());
+			map=new HashMap<>();
+			for(int j=0;j<m;j++){
+				line=reader.readLine();
+				st=new StringTokenizer(line);
+				String friend1=st.nextToken();
+				String friend2=st.nextToken();
+				if(!map.containsKey(friend1)){
+					Pair pair = new Pair();
+					pair.parent=friend1;
+					pair.size=1;
+					map.put(friend1, pair);
+					
+				}
+				
+				if(!map.containsKey(friend2)){
+					Pair pair = new Pair();
+					pair.parent=friend2;
+					pair.size=1;
+					map.put(friend2, pair);
+				}
+					
+				union(friend1, friend2);
+				System.out.println(map.get(findSet(friend2)).size);
+				
+				
+				
+				
+			}
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+	}
+
+}
