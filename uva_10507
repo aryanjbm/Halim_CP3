@@ -1,0 +1,82 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+//working on it
+
+public class WakingUpBrain {
+	
+	static Map<Character, Boolean> status;
+	static Map<Character,ArrayList<Character>> graph;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String line;
+		StringTokenizer st;
+
+		while((line=reader.readLine())!=null){
+			
+			st=new StringTokenizer(line);
+			int n=Integer.parseInt(st.nextToken());
+			graph=new HashMap<>();
+			status=new HashMap<>();
+			line=reader.readLine();
+			st=new StringTokenizer(line);
+			
+			String waken=line;
+			
+			
+			for(char ch:waken.toCharArray()){
+				status.put(ch,true);
+			}
+			int m=Integer.parseInt(st.nextToken());
+			line=reader.readLine();
+			for(int i=0;i<m;i++){
+				
+				line=reader.readLine();
+				
+				Character x=line.charAt(0);
+				Character y=line.charAt(1);
+				if(!graph.containsKey(x)){
+					graph.put(x,new ArrayList<>());
+				}
+				
+				if(!graph.containsKey(y)){
+					graph.put(x,new ArrayList<>());
+				}
+				graph.get(x).add(y);
+				graph.get(y).add(x);
+				
+				
+				
+				
+			}
+			
+			int total;
+			
+	
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+
+}
