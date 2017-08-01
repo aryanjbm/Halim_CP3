@@ -1,0 +1,111 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+class Main{
+	
+	static int[] parent;
+	static int[] rank;
+	
+	
+	public static int findSet(int i){
+		if(parent[i]==i){
+			return i;
+		}
+		else{
+			return findSet(parent[i]);
+		}
+		
+	}
+	
+	
+	
+	
+	public static boolean isSameSet(int i,int j){
+		return findSet(i)==findSet(j);
+	}
+	
+	
+	
+	public static void union(int i,int j){
+		
+		if(!isSameSet(i, j)){
+			int x=findSet(i);
+			int y=findSet(j);
+			
+			if(rank[x]<rank[y]){
+				parent[x]=y;
+			}
+			else{
+				parent[y]=x;
+				if(rank[x]==rank[y]){
+					rank[y]+=1;
+				}
+			}
+		}
+		
+	}
+		
+	
+	
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		String line;
+		StringTokenizer st;
+		line=reader.readLine();
+		st=new StringTokenizer(line);
+		int n=Integer.parseInt(line);
+		
+		for(int i=0;i<n;i++){
+			if(i==0)
+				reader.readLine();
+			line=reader.readLine();
+			st=new StringTokenizer(line);
+			int size=Integer.parseInt(st.nextToken());
+			parent=new int[size+1];
+			rank=new int[size+1];
+			for(int k=0;k<size+1;k++){
+				parent[k]=k;
+				rank[k]=k;
+			}
+			int success=0;
+			int failure=0;
+			line=reader.readLine();
+			while(line!=null && !line.equals("") ){
+				st=new StringTokenizer(line);
+				if(st.nextToken().equals("c")){
+					union(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+					
+				}
+				
+				else{
+					
+					if(isSameSet(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken())))
+						success+=1;
+					else
+						failure+=1;
+							
+				}
+				
+				line=reader.readLine();
+				
+				
+			}
+			if(i!=0)
+				System.out.println();
+			System.out.println(success+","+failure);
+			
+			
+			
+			
+		}
+		
+		
+		
+		reader.close();
+		
+	}
+	
+
+}
