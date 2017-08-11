@@ -1,0 +1,176 @@
+package DivideAndConquer;
+
+
+import java.util.Scanner;
+
+class Pair {
+	int x;
+	int y;
+
+	public Pair(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+
+public class GrapeVine {
+
+	public static int UpperBound(int[] arr, int item) {
+		int low = 0, high = arr.length - 1;
+		int loc = Integer.MAX_VALUE;
+		int loc_upper = -1;
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+		
+			if (arr[mid] >=item) {
+				if (arr[mid] <=loc) {
+					loc = arr[mid];
+					loc_upper = mid;
+				}
+				high = mid - 1;
+
+			} else
+				low = mid + 1;
+
+		}
+
+		return (loc == Integer.MAX_VALUE) ? -1 : loc_upper;
+
+	}
+
+	public static int LowerBound(int[] arr, int item) {
+		int low = 0, high = arr.length - 1;
+		int loc = Integer.MIN_VALUE;
+		int loc_lower = -1;
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+
+			if (arr[mid] > item)
+				high = mid - 1;
+
+			else {
+
+				if (arr[mid] >= loc) {
+					loc = arr[mid];
+					loc_lower = mid;
+				}
+				low = mid + 1;
+
+			}
+
+		}
+		return (loc == Integer.MIN_VALUE) ? -1 : loc_lower;
+	}
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+
+		while (scanner.hasNext()) {
+
+			int n = scanner.nextInt();
+			int m = scanner.nextInt();
+			if(n==0 && m==0)
+				break;
+			int mat[][] = new int[n][m];
+			int matT[][] = new int[m][n];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					mat[i][j] = scanner.nextInt();
+					matT[j][i]=mat[i][j];
+				}
+			}
+
+			int q = scanner.nextInt();
+			while (q-- != 0) {
+
+				int l = scanner.nextInt();
+				int u = scanner.nextInt();
+				int bestSoFar=0;
+				int i=0;
+				while(i<n) {
+					int startcol=UpperBound(mat[i], l);
+					int endcol=LowerBound(mat[i], u);
+					int startrow=i;
+					int endrow=i;
+					
+					
+
+					if(endcol>=startcol && startcol!=-1 && endcol!=-1){
+						
+						if(startcol==endcol){
+					
+							if(bestSoFar<1)
+								bestSoFar=1;
+							
+							i+=1;
+							continue;
+						
+						}
+						
+						if(startcol-endcol==1){
+							if(mat[i][startcol]<=l && mat[i][startcol]>=u){
+								i+=1;
+								continue;
+							}
+						}
+				
+						
+						if(i+endcol-startcol<n && mat[i+endcol-startcol][endcol]<=u){
+							if(endcol-startcol+1>bestSoFar){
+								bestSoFar=endcol-startcol+1;
+								
+							}
+							
+							i+=(endcol-startcol+1);
+							continue;
+						}
+					
+					do{
+						
+					int temp2=LowerBound(matT[endcol], u);
+					
+					if(temp2==-1){
+						
+						endcol-=1;
+						
+					}
+						
+					
+					else
+						endrow=temp2;
+					
+					
+					if((endrow-startrow)==(endcol-startcol))
+						break;
+					else{
+						endcol-=1;
+					}
+					
+					
+					
+					}while(endcol>=startcol);
+					
+					if((endrow-startrow)==(endcol-startcol)){
+						int side=Math.abs(endrow-startrow)+1;
+						if(side>bestSoFar)
+							bestSoFar=side;
+					}
+					
+					
+
+
+			}
+					
+					i++;
+				}
+				
+				System.out.println(bestSoFar);
+				
+				
+			}
+
+		
+			System.out.println("-");
+		}}
+
+}
